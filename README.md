@@ -1,6 +1,6 @@
 # animax
 
-JAX/[gymnax](https://github.com/RobertTLange/gymnax) ports of the classical-conditioning
+[gymnax](https://github.com/RobertTLange/gymnax) ports of the classical-conditioning
 state-construction benchmarks from
 [Classical-conditioning-benchmarks-for-state-construction](https://github.com/banafsheh-rafiee/Classical-conditioning-benchmarks-for-state-construction)
 (Rafiee et al., *Adaptive Behavior* 2022).
