@@ -126,3 +126,35 @@ def test_trace_patterning_pattern_matches_drive_us():
     _, _, r_seq = _rollout(env, params, jax.random.PRNGKey(2), 1500)
     r = np.asarray(r_seq)
     assert r.sum() > 0
+
+
+def test_make_returns_env_and_params():
+    env, params = animax.make("TraceConditioning-v0", num_distractors=2)
+    assert isinstance(env, animax.TraceConditioning)
+    assert env.num_distractors == 2
+    assert params is env.default_params or params == env.default_params
+
+    env, params = animax.make(
+        "TracePatterning-v0", num_cs=3, num_activation_patterns=2
+    )
+    assert isinstance(env, animax.TracePatterning)
+    assert env.num_cs == 3
+
+    env, params = animax.make("NoisyPatterning-v0", num_cs=3, num_activation_patterns=2)
+    assert isinstance(env, animax.NoisyPatterning)
+    assert params.isi_min == params.cs_activation_length
+
+
+def test_make_unknown_env_raises():
+    import pytest
+
+    with pytest.raises(ValueError, match="Unknown env_id"):
+        animax.make("NotAnEnv-v0")
+
+
+def test_registry_lists_all_three():
+    assert set(animax.REGISTRY) == {
+        "TraceConditioning-v0",
+        "TracePatterning-v0",
+        "NoisyPatterning-v0",
+    }
